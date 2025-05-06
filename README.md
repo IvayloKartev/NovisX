@@ -1,4 +1,4 @@
-# Inkron
+# NovisX
 Simple game engine for developping visual novels.
 
 ## Installation
