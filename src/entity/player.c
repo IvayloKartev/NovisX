@@ -1,0 +1,58 @@
+#include "player.h"
+#include "map.h"
+#include <string.h>
+#include "graphics.h"
+
+static int x_pos = 0;
+static int y_pos = 0;
+
+static SDL_Texture* player_sprites[4];
+static int current_sprite = 0;
+
+bool show_player = false;
+
+// 0 for up, 1 for down, 2 for right, 3 for left
+
+void load_player_sprites(char* filename_up, char* filename_down, char* filename_right, char* filename_left)
+{
+    player_sprites[0] = graphics_load_texture(filename_up);
+    player_sprites[1] = graphics_load_texture(filename_down);
+    player_sprites[2] = graphics_load_texture(filename_right);
+    player_sprites[3] = graphics_load_texture(filename_left);
+}
+
+void move_player(char* direction, int speed)
+{
+    if (strcmp(direction, "up") == 0)
+    {
+        y_pos -= speed;
+        current_sprite = 0;
+    }
+    else if (strcmp(direction, "down") == 0)
+    {
+        y_pos += speed;
+        current_sprite = 1;
+    }
+    else if (strcmp(direction, "right") == 0)
+    {
+        x_pos += speed;
+        current_sprite = 2;
+    }
+    else if (strcmp(direction, "left") == 0)
+    {
+        x_pos -= speed;
+        current_sprite = 3;
+    }
+
+    printf("PLAYER MOVED: (%d; %d)", x_pos, y_pos);
+
+    move_camera(x_pos, y_pos);
+}
+
+void render_player()
+{
+    SDL_Rect dest = {x_pos, y_pos, 32, 32};
+    SDL_RenderCopy(gRenderer, player_sprites[current_sprite], NULL, &dest);
+}
+
+

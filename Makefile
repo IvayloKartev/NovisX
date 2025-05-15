@@ -4,7 +4,7 @@ CFLAGS = -Wall -g
 LIBS = -lSDL2 -lSDL2_mixer -lSDL2_ttf
 
 # Source and object files
-SRCS = src/main.c src/core/graphics.c src/core/script.c src/core/engine.c src/ui/menu.c
+SRCS = src/main.c src/core/graphics.c src/core/script.c src/core/engine.c src/ui/menu.c src/ui/map.c src/entity/player.c
 OBJS = $(SRCS:src/%.c=obj/%.o)
 
 # Executable name

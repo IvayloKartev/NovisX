@@ -1,8 +1,10 @@
 #include "engine.h"
 #include "graphics.h"
 #include "script.h"
-#include <SDL2/SDL.h>
-#include "../ui/menu.h"
+#include <SDL.h>
+#include "menu.h"
+#include "player.h"
+#include "map.h"
 
 extern bool awaiting_choice;
 extern bool menu_visible = false;
@@ -31,8 +33,32 @@ void engine_run()
             }
 
             if(menu_event_handler(&event)) continue;
+
+            if (event.type == SDL_KEYDOWN)
+            {
+                if (event.key.keysym.sym == SDLK_UP)
+                {
+                    printf("MOVING UP\n");
+                    move_player("up", 10);
+                }
+                else if (event.key.keysym.sym == SDLK_DOWN)
+                {
+                    printf("MOVING DOWN\n");
+                    move_player("down", 10);
+                }
+                else if (event.key.keysym.sym == SDLK_RIGHT)
+                {
+                    printf("MOVING RIGHT\n");
+                    move_player("right", 10);
+                }
+                else if (event.key.keysym.sym == SDLK_LEFT)
+                {
+                    printf("MOVING LEFT\n");
+                    move_player("left", 10);
+                }
+            }
             // checks for mouse clicks and keyboard presses types of events
-            if (event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_KEYDOWN && event.key.keysym.sym != SDLK_ESCAPE) {
+            if (event.type == SDL_MOUSEBUTTONDOWN || (event.type == SDL_KEYDOWN && event.key.keysym.sym != SDLK_ESCAPE && event.key.keysym.sym != SDLK_UP && event.key.keysym.sym != SDLK_DOWN && event.key.keysym.sym != SDLK_RIGHT && event.key.keysym.sym != SDLK_LEFT)) {
 
                 // checks if particularly mouse is clicked
                 if (event.type == SDL_MOUSEBUTTONDOWN) {
@@ -50,7 +76,6 @@ void engine_run()
             if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
                 menu_visible = !menu_visible;
             }
-
         }
 
         script_update();

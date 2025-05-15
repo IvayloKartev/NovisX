@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../ui/menu.h"
-
+#include "menu.h"
+#include "map.h"
+#include "player.h"
 // enum of supported commands
 typedef enum {
     CMD_NONE,
@@ -13,7 +14,10 @@ typedef enum {
     CMD_CHARACTER,
     CMD_SAY,
     CMD_CHOICE,
-    CMD_MENU
+    CMD_MENU,
+    CMD_MAP,
+    CMD_PLAYER_SPRITE,
+    CMD_MAP_TILE
 } CommandType;
 
 // the object for one line of code - if new commands have more arguments, the maximum argument amount should be added
@@ -48,7 +52,11 @@ static Uint32 alpha_step_time = 0;
 
 bool character_say[512]; //tracks where the character image should be displayed together with the text
 bool awaiting_choice = false;
+bool map_loaded = false;
 static bool background_should_fade = false;
+
+static SDL_Texture* tile_textures[3];
+static int tile_texture_current_index = 0;
 
 bool script_load(const char* filename) {
     FILE* f = fopen(filename, "r");
@@ -76,20 +84,42 @@ bool script_load(const char* filename) {
                 sscanf(line, "character %s +", cmd.arg1);
             }
             else sscanf(line, "character %s", cmd.arg1);
-        } else if (strncmp(line, "say", 3) == 0) {
+        }
+        else if (strncmp(line, "say", 3) == 0) {
             cmd.type = CMD_SAY;
             char speaker[64], text[512];
             sscanf(line, "say \"%[^\"]\" \"%[^\"]\"", speaker, text);
             strcpy(cmd.arg1, speaker);
             strcpy(cmd.arg2, text);
-        } else if (strncmp(line, "choice", 6) == 0) {
+        }
+        else if (strncmp(line, "choice", 6) == 0) {
             cmd.type = CMD_CHOICE;
             sscanf(line, "choice \"%[^\"]\" \"%[^\"]\" \"%[^\"]\" \"%[^\"]\"", cmd.arg1, cmd.arg2, cmd.arg3, cmd.arg4);
-        } else if (strncmp(line, "menu", 4) == 0)
+        }
+        else if (strncmp(line, "menu", 4) == 0)
         {
             cmd.type = CMD_MENU;
             sscanf(line, "menu %s", cmd.arg1);
             printf("Line: %s\n", line);
+        }
+
+        else if (strncmp(line, "map_init", 8) == 0)
+        {
+            cmd.type = CMD_MAP;
+            sscanf(line, "map_init %s", cmd.arg1);
+            printf("Line: %s\n", line);
+        }
+
+        else if (strncmp(line, "map_tile", 8) == 0)
+        {
+            cmd.type = CMD_MAP_TILE;
+            sscanf(line, "map_tile %s", cmd.arg1);
+            printf("Map tile path: %s\n", cmd.arg1);
+        }
+        else if (strncmp(line, "player_sprite", 13) == 0)
+        {
+            cmd.type = CMD_PLAYER_SPRITE;
+            sscanf(line, "player_sprite %s : %s : %s : %s", cmd.arg1, cmd.arg2, cmd.arg3, cmd.arg4);
         }
 
         commands[command_count++] = cmd;
@@ -159,6 +189,20 @@ void script_next() {
             printf("Initializing menu: %s", cmd->arg1);
             init_menu("assets/menu.txt");
             break;
+        case CMD_MAP:
+            printf("MAP_LOADED: %b\n", map_loaded);
+            map_loaded = load_map(cmd->arg1);
+            printf("MAP_LOADED: %b\n", map_loaded);
+            break;
+        case CMD_MAP_TILE:
+            printf("%s\n", &(cmd->arg1));
+            tile_textures[tile_texture_current_index] = graphics_load_texture(cmd->arg1);
+            tile_texture_current_index++;
+            printf("Assigned textures");
+            break;
+        case CMD_PLAYER_SPRITE:
+            load_player_sprites(cmd->arg1, cmd->arg2, cmd->arg3, cmd->arg4);
+            show_player = true;
         default:
             break;
     }
@@ -186,6 +230,12 @@ void script_render() {
     }
     if (character) graphics_draw_texture(character, 300, 100);
 
+    if(map_loaded)
+    {
+        //printf("Will print a map!");
+        render_map(gRenderer, tile_textures);
+    }
+    if(show_player) render_player();
     if (awaiting_choice) {
         graphics_draw_text(choice1, 100, 450);
         graphics_draw_text(choice2, 100, 500);
