@@ -42,11 +42,14 @@ The engine currently requires SDL and libxml2. Will add a config script in the f
 
 ## License
 
-This project is licensed under the GNU Lesser General Public License v3.0 (LGPL-3.0).
+This project is is dual-licensed under the following licenses:  
+1. **GNU General Public License v3 (GPL-3.0)**  
+2. **Commercial proprietary license**  
 
-You are free to use this engine to develop and sell your own games, without any need to open source your game code.
+Anyone can use, redestribute, contribute and modify the software under the clauses, defined by the GPL v3 license, as long as any derivates are distributed under the same license.
+Commercial use of the games created with the engine is permitted, as long as their source code is provided.
+Only after obtaining a **Commercial proprietart license** derivatives can be released as closed-source software
 
-However, any modifications to the engine itself must be published under the same LGPL-3.0 license.
-
+See [NOTICE.md](NOTICE.md) for explanation of the licensing.
 See [LICENSE](LICENSE) for full license text.
 
