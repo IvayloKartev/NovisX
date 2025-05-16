@@ -1,10 +1,12 @@
 # depslib dependency file v1.0
-1746385394 source:/home/ivaylokartev/Projects/GameEngine/NovisX/engine.c
+1747422125 source:/home/ivaylokartev/Projects/GameEngine/NovisX/engine.c
 	"engine.h"
 	"graphics.h"
-	"script.h"
+	"parser.h"
 	<SDL.h>
 	"menu.h"
+	"player.h"
+	"map.h"
 
 1746218434 /home/ivaylokartev/Projects/GameEngine/NovisX/engine.h
 	<stdbool.h>
@@ -13,8 +15,7 @@
 	<stdbool.h>
 	<SDL2/SDL.h>
 
-1746218395 /home/ivaylokartev/Projects/GameEngine/NovisX/script.h
-	<stdbool.h>
+1747412507 /home/ivaylokartev/Projects/GameEngine/NovisX/script.h
 
 1735746525 /usr/include/SDL2/SDL.h
 	"SDL_main.h"
@@ -428,7 +429,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1746385327 source:/home/ivaylokartev/Projects/GameEngine/NovisX/graphics.c
+1747325830 source:/home/ivaylokartev/Projects/GameEngine/NovisX/graphics.c
 	"graphics.h"
 	<SDL2/SDL_ttf.h>
 	<stdio.h>
@@ -451,23 +452,152 @@
 1746218242 source:/home/ivaylokartev/Projects/GameEngine/NovisX/main.c
 	"engine.h"
 
-1746295360 source:/home/ivaylokartev/Projects/GameEngine/NovisX/script.c
+1747327992 source:/home/ivaylokartev/Projects/GameEngine/NovisX/script.c
 	"script.h"
 	"graphics.h"
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
 	"menu.h"
+	"map.h"
+	"player.h"
 
 1746374136 /home/ivaylokartev/Projects/GameEngine/NovisX/menu.h
 	<stdbool.h>
 	<SDL2/SDL.h>
 
-1746384967 source:/home/ivaylokartev/Projects/GameEngine/NovisX/menu.c
+1746385508 source:/home/ivaylokartev/Projects/GameEngine/NovisX/menu.c
 	"graphics.h"
 	"menu.h"
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
 	<SDL.h>
+
+1747412636 /home/ivaylokartev/Projects/GameEngine/NovisX/player.h
+	<stdbool.h>
+	<SDL2/SDL.h>
+
+1747318302 /home/ivaylokartev/Projects/GameEngine/NovisX/map.h
+	<stdbool.h>
+	<SDL2/SDL.h>
+
+1747426591 source:/home/ivaylokartev/Projects/GameEngine/NovisX/map.c
+	"map.h"
+	"graphics.h"
+	<SDL2/SDL.h>
+
+1747412666 source:/home/ivaylokartev/Projects/GameEngine/NovisX/player.c
+	"player.h"
+	"map.h"
+	<string.h>
+	"graphics.h"
+
+1747410656 /home/ivaylokartev/Projects/GameEngine/NovisX/parser.h
+	<stdbool.h>
+	<libxml/parser.h>
+	<libxml/tree.h>
+
+1718150400 /usr/include/libxml2/libxml/parser.h
+	<libxml/xmlversion.h>
+	<libxml/tree.h>
+	<libxml/dict.h>
+	<libxml/hash.h>
+	<libxml/valid.h>
+	<libxml/entities.h>
+	<libxml/xmlerror.h>
+	<libxml/xmlstring.h>
+	<libxml/xmlmemory.h>
+	<libxml/encoding.h>
+	<libxml/xmlIO.h>
+	<libxml/SAX2.h>
+	<libxml/threads.h>
+
+1718150400 /usr/include/libxml2/libxml/xmlversion.h
+	<libxml/xmlexports.h>
+
+1718150400 /usr/include/libxml2/libxml/xmlexports.h
+
+1718150400 /usr/include/libxml2/libxml/tree.h
+	<libxml/parser.h>
+	<stdio.h>
+	<limits.h>
+	<libxml/xmlversion.h>
+	<libxml/xmlstring.h>
+	<libxml/xmlmemory.h>
+	<libxml/xmlregexp.h>
+
+1687429183 /usr/include/libxml2/libxml/xmlstring.h
+	<stdarg.h>
+	<libxml/xmlversion.h>
+
+1718150400 /usr/include/libxml2/libxml/xmlmemory.h
+	<stdio.h>
+	<libxml/xmlversion.h>
+
+1715595195 /usr/include/libxml2/libxml/xmlregexp.h
+	<stdio.h>
+	<libxml/xmlversion.h>
+	<libxml/xmlstring.h>
+
+1715595195 /usr/include/libxml2/libxml/dict.h
+	<stddef.h>
+	<libxml/xmlversion.h>
+	<libxml/xmlstring.h>
+
+1718150400 /usr/include/libxml2/libxml/hash.h
+	<libxml/xmlversion.h>
+	<libxml/dict.h>
+	<libxml/xmlstring.h>
+
+1718150400 /usr/include/libxml2/libxml/valid.h
+	<libxml/xmlversion.h>
+	<libxml/xmlerror.h>
+	<libxml/tree.h>
+	<libxml/list.h>
+	<libxml/xmlautomata.h>
+	<libxml/xmlregexp.h>
+
+1718150400 /usr/include/libxml2/libxml/xmlerror.h
+	<libxml/xmlversion.h>
+
+1718150400 /usr/include/libxml2/libxml/list.h
+	<libxml/xmlversion.h>
+
+1687429183 /usr/include/libxml2/libxml/xmlautomata.h
+	<libxml/xmlversion.h>
+	<libxml/xmlstring.h>
+
+1718150400 /usr/include/libxml2/libxml/entities.h
+	<libxml/xmlversion.h>
+	<libxml/tree.h>
+
+1718150400 /usr/include/libxml2/libxml/encoding.h
+	<libxml/xmlversion.h>
+	<iconv.h>
+
+1718150400 /usr/include/libxml2/libxml/xmlIO.h
+	<stdio.h>
+	<libxml/xmlversion.h>
+	<libxml/encoding.h>
+	<libxml/tree.h>
+
+1715595195 /usr/include/libxml2/libxml/SAX2.h
+	<libxml/xmlversion.h>
+	<libxml/parser.h>
+
+1715595195 /usr/include/libxml2/libxml/threads.h
+	<libxml/xmlversion.h>
+
+1747426759 source:/home/ivaylokartev/Projects/GameEngine/NovisX/parser.c
+	"script.h"
+	"graphics.h"
+	<stdlib.h>
+	"menu.h"
+	"map.h"
+	"player.h"
+	<libxml/parser.h>
+	<libxml/tree.h>
+	<stdio.h>
+	<string.h>
 

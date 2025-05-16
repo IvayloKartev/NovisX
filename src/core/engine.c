@@ -1,10 +1,10 @@
 #include "engine.h"
 #include "graphics.h"
-#include "script.h"
+#include "parser.h"
 #include <SDL.h>
-#include "menu.h"
-#include "player.h"
-#include "map.h"
+#include "../ui/menu.h"
+#include "../entity/player.h"
+#include "../ui/map.h"
 
 extern bool awaiting_choice;
 extern bool menu_visible = false;
@@ -13,7 +13,7 @@ static bool running = true;
 bool engine_init()
 {
     if (!graphics_init()) return false;
-    if (!script_load("assets/script.txt")) return false;
+    if (!script_load_xml("assets/start.xml")) return false;
     return true;
 }
 

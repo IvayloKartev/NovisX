@@ -1,0 +1,62 @@
+<script>
+    <scene>
+        <!-- Menu and Background -->
+        <menu file="assets/menu.txt" />
+        <background file="assets/bg.bmp" />
+
+        <!-- Characters and Dialogues -->
+        <panel id="1">
+            <character name="Bombardiro crocodilo" sprite="assets/bc.bmp" />
+            <dialogue>
+                <say speaker="Bombardiro crocodilo">I love Italian Brainrot</say>
+            </dialogue>
+        </panel>
+
+        <panel id="2">
+            <character name="Tralalero Tralala" sprite="assets/tt.bmp" />
+            <dialogue>
+                <say speaker="Tralalero Tralala">I don't</say>
+            </dialogue>
+        </panel>
+
+        <character name="Bombardiro crocodilo" sprite="assets/bc.bmp" />
+        <dialogue>
+            <say speaker="Bombardiro crocodilo">Because you don't understand it</say>
+        </dialogue>
+
+        <character name="Tung Tung Tung Sahur" sprite="assets/ttts.bmp" />
+        <dialogue>
+            <say speaker="Tung Tung Tung Sahur">Let's gang on Bombardiro crocodilo, he is too OP.</say>
+        </dialogue>
+
+        <!-- Scene Transition -->
+        <background file="assets/bg2.bmp" />
+        <character name="Bombardiro crocodilo" sprite="assets/bc.bmp" />
+        <dialogue>
+            <say speaker="Bombardiro crocodilo">What should I do now?</say>
+        </dialogue>
+
+        <!-- Choices -->
+        <choices>
+            <choice text="Attack Tralalero Tralala" script="tralalero.txt" />
+            <choice text="Attack Tung Tung Tung Sahur" script="sahur.txt" />
+        </choices>
+    </scene>
+
+    <play>
+        <!-- Map and Tiles -->
+        <map name="terrain_map" file="assets/terrain_map.txt">
+            <tile file="assets/tile_0.bmp" />
+            <tile file="assets/tile_1.bmp" />
+            <tile file="assets/tile_2.bmp" />
+        </map>
+
+        <!-- Player Sprites -->
+        <player_sprite>
+            <direction file="assets/player_up.bmp" />
+            <direction file="assets/player_down.bmp" />
+            <direction file="assets/player_up.bmp" />
+            <direction file="assets/player_down.bmp" />
+        </player_sprite>
+    </play>
+</script>

@@ -2,6 +2,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <SDL2/SDL_mixer.h>
+
 static Mix_Music* gMusic = NULL;
 
 static SDL_Window* gWindow = NULL;

@@ -1,5 +1,5 @@
 #include "map.h"
-#include "graphics.h"
+#include "../core/graphics.h"
 
 #define MAP_SIZE 299
 #define MAP_WIDTH 299

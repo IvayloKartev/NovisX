@@ -1,10 +1,10 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -g
-LIBS = -lSDL2 -lSDL2_mixer -lSDL2_ttf
+CFLAGS = -Wall -g $(shell pkg-config --cflags sdl2 libxml-2.0)
+LIBS = $(shell pkg-config --libs sdl2 SDL2_mixer SDL2_ttf libxml-2.0)
 
 # Source and object files
-SRCS = src/main.c src/core/graphics.c src/core/script.c src/core/engine.c src/ui/menu.c src/ui/map.c src/entity/player.c
+SRCS = src/main.c src/core/graphics.c src/core/parser.c src/core/engine.c src/ui/menu.c src/ui/map.c src/entity/player.c
 OBJS = $(SRCS:src/%.c=obj/%.o)
 
 # Executable name
@@ -13,7 +13,6 @@ TARGET = Game
 # Default target
 all: $(TARGET)
 
-# Link objects to create final executable
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
 

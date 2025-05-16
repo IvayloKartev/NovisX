@@ -1,0 +1,16 @@
+<play>
+    <!-- Map and Tiles -->
+    <map name="terrain_map" file="assets/terrain_map.txt">
+        <tile file="assets/tile_0.bmp" />
+        <tile file="assets/tile_1.bmp" />
+        <tile file="assets/tile_2.bmp" />
+    </map>
+
+    <!-- Player Sprites -->
+    <player_sprite>
+        <direction file="assets/player_up.bmp" />
+        <direction file="assets/player_down.bmp" />
+        <direction file="assets/player_up.bmp" />
+        <direction file="assets/player_down.bmp" />
+    </player_sprite>
+</play>

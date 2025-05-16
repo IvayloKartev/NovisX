@@ -1,9 +1,9 @@
 #include "../core/graphics.h"
-#include "menu.h"
+#include "../ui/menu.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
 

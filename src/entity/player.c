@@ -1,7 +1,7 @@
 #include "player.h"
-#include "map.h"
+#include "../ui/map.h"
 #include <string.h>
-#include "graphics.h"
+#include "../core/graphics.h"
 
 static int x_pos = 0;
 static int y_pos = 0;
