@@ -18,8 +18,8 @@ The engine can be used to develop simple games using XML-like scripting language
 ### Simple guide how to make a game using the engine
 
 1. The start point of every program should be called start.xml. All branching, defining menus and assets should be first initialized inside.
-2. Each XML file should have only one root element. It could be <xml></xml> or <script></script> or whatever you like
-3. You can divide your sections using tags, according to your liking (in the example in assets/script.xml <scene> is used for visual novel scenes, and <play> for a character moving across generated terrain)
+2. Each XML file should have only one root element. It could be \<xml\>\<\/xml\> or \<script\>\<\/script\> or whatever you like
+3. You can divide your sections using tags, according to your liking (in the example in assets/script.xml \<scene\> is used for visual novel scenes, and \<play\> for a character moving across generated terrain)
 4. The engine's parser recognizes the following tags with special functions and attributes, useful for visual novel game development:
 - \<background\> - with the attribute "file" can be used to set background during visual novel scene
 - \<music\> - with the attribute "source" can be used to set music themes on loop
