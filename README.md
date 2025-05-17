@@ -24,15 +24,15 @@ The engine can be used to develop simple games using XML-like scripting language
 - \<background\> - with the attribute "file" can be used to set background during visual novel scene
 - \<music\> - with the attribute "source" can be used to set music themes on loop
 - \<menu\> - can be used to import menu files (custom files for appearing menu) - using the "file" attribute
-- \<panel\> - everything within a panel element will be rendered at once (basically a panel in visual novels). The panel element can currently contain two elements - <character> and <dialogue>. It can take two attributes - text-bg (for defining background for the displayed text in a dialogue box) and speaker-bg (for defining background for the text of the speaker's name). They can currently either accept paths to images, or "default", which renders semi-transparent background behind them. If left empty, nothing displays behind the text.
+- \<panel\> - everything within a panel element will be rendered at once (basically a panel in visual novels). The panel element can currently contain two elements - \<character\> and \<dialogue\>. It can take two attributes - text-bg (for defining background for the displayed text in a dialogue box) and speaker-bg (for defining background for the text of the speaker's name). They can currently either accept paths to images, or "default", which renders semi-transparent background behind them. If left empty, nothing displays behind the text.
 - \<character\> - used to set a character sprite and name. Can be used inside panel component or separately. Can accept scale attribute to scale the sprite (accepts percentages, for example scale="150")
-- \<dialogue\> - a wrapper element, that contains <say> elements. Can be used inside panel component or separately
+- \<dialogue\> - a wrapper element, that contains \<say\> elements. Can be used inside panel component or separately
 - \<say\> - contains text to be displayed and the character saying it (if given). Can be used inside dialogue component or separately
-- \<choice\> - used to define a branching in the story. Contains text to be displayed and a script to be loaded. Can be wrapped within <choices> tag
+- \<choice\> - used to define a branching in the story. Contains text to be displayed and a script to be loaded. Can be wrapped within \<choices\> tag
 5. The engine's parser recognizes the following tags, useful for 2D top-down games:
-- \<map\> - used to load a map from a 2D array file (each number in it can represent a separate tile). Wrapper tag for <tile>
+- \<map\> - used to load a map from a 2D array file (each number in it can represent a separate tile). Wrapper tag for \<tile\>
 - \<tile\> - with its "file" attribute can be used to define tiles, that will be used with the loaded map to generate 2D terrain
-- \<player_sprite\> - used to define a 2D sprite, that can be controlled by the player to move accross the terrain. Wraps <direction> tags
+- \<player_sprite\> - used to define a 2D sprite, that can be controlled by the player to move accross the terrain. Wraps \<direction\> tags
 - \<direction\> - defines separate sprites for an entity, depending on the direction it is facing. They go in the following order - up, down, right, left
 6. You can always refer to the uploaded example scripts (will upload more in the future)
 
