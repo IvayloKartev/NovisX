@@ -21,9 +21,9 @@ The engine can be used to develop simple games using XML-like scripting language
 2. Each XML file should have only one root element. It could be <xml></xml> or <script></script> or whatever you like
 3. You can divide your sections using tags, according to your liking (in the example in assets/script.xml <scene> is used for visual novel scenes, and <play> for a character moving across generated terrain)
 4. The engine's parser recognizes the following tags with special functions and attributes, useful for visual novel game development:
-- <background> - with the attribute "file" can be used to set background during visual novel scene
-- <music> - with the attribute "source" can be used to set music themes on loop
-- <menu> - can be used to import menu files (custom files for appearing menu) - using the "file" attribute
+- \<background\> - with the attribute "file" can be used to set background during visual novel scene
+- \<music\> - with the attribute "source" can be used to set music themes on loop
+- \<menu\> - can be used to import menu files (custom files for appearing menu) - using the "file" attribute
 - <panel> - everything within a panel element will be rendered at once (basically a panel in visual novels). The panel element can currently contain two elements - <character> and <dialogue>
 - <character> - used to set a character sprite and name. Can be used inside panel component or separately
 - <dialogue> - a wrapper element, that contains <say> elements. Can be used inside panel component or separately
