@@ -2,7 +2,6 @@
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <SDL2/SDL_mixer.h>
-
 static Mix_Music* gMusic = NULL;
 
 static SDL_Window* gWindow = NULL;
@@ -91,7 +90,61 @@ void graphics_draw_texture(SDL_Texture* texture, int x, int y)
     SDL_RenderCopy(gRenderer, texture, NULL, &dst);
 }
 
-void graphics_draw_text(const char* text, int x, int y)
+void graphics_scale_texture(SDL_Texture* texture, int x, int y, int scale)
+{
+    if (!texture)
+    {
+        printf("Warning: Tried to draw NULL texture!\n");
+        return;
+    }
+
+    int original_w, original_h;
+    // gets the dimensions of a texture from the image
+    SDL_QueryTexture(texture, NULL, NULL, &original_w, &original_h);
+
+    // scaled dimensions
+    int scaled_w = original_w * scale / 100;
+    int scaled_h = original_h * scale / 100;
+    SDL_Rect dst = {x, y, scaled_w, scaled_h};
+    // Render the texture with the scaled dimensions
+    SDL_RenderCopy(gRenderer, texture, NULL, &dst);
+}
+
+
+void graphics_draw_sized_texture(SDL_Texture* texture, int x, int y, int width, int height)
+{
+    if (!texture)
+    {
+        printf("Warning: Tried to draw NULL texture!\n");
+        return;
+    }
+
+    SDL_Rect dst = {x, y, 0, 0};
+    int original_w, original_h;
+
+    // Get the original dimensions of the texture
+    SDL_QueryTexture(texture, NULL, NULL, &original_w, &original_h);
+
+    // Use specified dimensions if provided, otherwise use the texture's original size
+    dst.w = (width > 0) ? width : original_w;
+    dst.h = (height > 0) ? height : original_h;
+
+    // Define the source rectangle to crop if necessary
+    SDL_Rect src = {0, 0, original_w, original_h};
+
+    // Adjust source rectangle if the desired dimensions are smaller than the original
+    if (width > 0 && width < original_w) {
+        src.w = width;
+    }
+    if (height > 0 && height < original_h) {
+        src.h = height;
+    }
+
+    // Render the texture with the specified or default dimensions
+    SDL_RenderCopy(gRenderer, texture, &src, &dst);
+}
+
+void graphics_draw_text(const char* text, int x, int y, SDL_Texture* text_bg, int alpha, int r, int g, int b)
 {
     if (text == NULL || text[0] == '\0') {
         //printf("Error: Text is empty.\n");
@@ -104,7 +157,7 @@ void graphics_draw_text(const char* text, int x, int y)
     }
 
     // using built-in methods to generate text surface
-    SDL_Color white = {255, 255, 255, 255};
+    SDL_Color white = {r, g, b, alpha};
     SDL_Surface* surface = TTF_RenderText_Blended(gFont, text, white);
     if (!surface) {
         printf("Error creating text surface: %s\n", TTF_GetError());
@@ -122,7 +175,18 @@ void graphics_draw_text(const char* text, int x, int y)
     // a copy is rendered in order to appear on the screen
     SDL_Rect dst = {x, y, surface->w, surface->h};
 
+    if(text_bg)
+    {
+            //printf("About to draw text bg\n");
+            SDL_Rect dst = {x - 100, y, 0, 0};
+            // uses generated texture and uses coordinates to calculate width and height
+            SDL_QueryTexture(text_bg, NULL, NULL, &dst.w, &dst.h);
+            // in order for a texture to appear, a copy of it has to be rendered
+            SDL_RenderCopy(gRenderer, text_bg, NULL, &dst);
+    }
+
     SDL_RenderCopy(gRenderer, texture, NULL, &dst);
+
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
 }
@@ -202,8 +266,10 @@ SDL_Texture* combine_textures(SDL_Texture** textures, int* x_positions, int* y_p
 }
 
 
-SDL_Texture* create_transparent_rect_texture(int width, int height) {
-    SDL_Color transparent_gray = {50, 50, 50, 100};
+SDL_Texture* create_transparent_rect_texture(int width, int height, int alpha, int r, int g, int b) {
+
+    SDL_Color transparent_gray = {r, g, b, alpha};
+
     // creating an RGBA texture with render target access
     SDL_Texture* texture = SDL_CreateTexture(
         gRenderer,
@@ -251,4 +317,48 @@ SDL_Texture* graphics_load_text(char* text)
     }
 
     return texture;
+}
+
+SDL_Texture* graphics_resize_texture(SDL_Texture* texture, int new_width, int new_height)
+{
+    if (!texture)
+    {
+        printf("Warning: Tried to resize a NULL texture!\n");
+        return NULL;
+    }
+
+    int original_w, original_h;
+    // original dimensions of the texture
+    SDL_QueryTexture(texture, NULL, NULL, &original_w, &original_h);
+
+    // new texture with the specified dimensions
+    SDL_Texture* resized_texture = SDL_CreateTexture(
+        gRenderer,
+        SDL_PIXELFORMAT_RGBA8888,
+        SDL_TEXTUREACCESS_TARGET,
+        new_width, new_height
+    );
+
+    if (!resized_texture)
+    {
+        printf("Error: Unable to create resized texture: %s\n", SDL_GetError());
+        return NULL;
+    }
+
+    // Set the new texture as the rendering target
+    SDL_SetRenderTarget(gRenderer, resized_texture);
+
+    // Clear the texture (optional, but ensures transparency)
+    SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0);
+    SDL_RenderClear(gRenderer);
+
+    SDL_Rect dst = {0, 0, new_width, new_height};
+
+    // Copy the original texture onto the new one with resizing
+    SDL_RenderCopy(gRenderer, texture, NULL, &dst);
+
+    // Reset the rendering target to the default (screen)
+    SDL_SetRenderTarget(gRenderer, NULL);
+
+    return resized_texture;
 }

@@ -85,6 +85,9 @@ static int tile_texture_current_index = 0;
 static char direction_sprite_files[4][256];
 int sprite_files_index = 0;
 
+static SDL_Texture* text_bg = NULL;
+static SDL_Texture* speaker_bg = NULL;
+
 void add_command(CommandType type, const char* arg1, const char* arg2, PanelData* arg3) {
     if (command_count < MAX_COMMANDS) {
         Command cmd = {type, "", "", NULL};
@@ -192,7 +195,9 @@ void parse_node(xmlNode* node) {
             if (strcmp((char*)curr->name, "panel") == 0) {
                 printf("About to process a panel: %s\n", (char*)curr->name);
                 PanelData* panelData = extract_panel_data(curr);
-                add_command(CMD_PANEL, NULL, NULL, panelData);
+                xmlChar* text_bg = xmlGetProp(curr, (const xmlChar*)"text-bg");
+                xmlChar* speaker_bg = xmlGetProp(curr, (const xmlChar*)"speaker-bg");
+                add_command(CMD_PANEL, (char*)text_bg, (char*)speaker_bg, panelData);
                 continue;
             }
             else if (strcmp((char*)curr->name, "background") == 0) {
@@ -397,6 +402,24 @@ void script_next() {
                     strcpy(current_text, panelData->dialogues[i].text);
                 }
             }
+            if (cmd->arg1)
+            {
+                if(strcmp(cmd->arg1, "default") == 0)
+                {
+                    printf("About to draw textbg\n");
+                    text_bg = create_transparent_rect_texture(800, 200, 200, 50, 50, 50);
+                }
+            }
+            if (cmd->arg2)
+            {
+                if(strcmp(cmd->arg2, "default") == 0)
+                {
+                    printf("???");
+                }
+                printf("About to draw speakerbg\n");
+                speaker_bg = graphics_resize_texture(graphics_load_texture(cmd->arg2), 800, 40);
+                //speaker_bg = create_transparent_rect_texture(800, 200, 200, 50, 50, 50);
+            }
             //free(cmd->arg3);
             break;
         default:
@@ -418,16 +441,16 @@ void script_render() {
         graphics_draw_texture(background, 0, 0); // fully opaque
         SDL_SetTextureBlendMode(previous_background, SDL_BLENDMODE_BLEND);
         SDL_SetTextureAlphaMod(previous_background, alpha_step);
-        graphics_draw_texture(previous_background, 0, 0);
+        graphics_draw_sized_texture(previous_background, 0, 0, 800, 600);
     }
     else if (background)
     {
-        graphics_draw_texture(background, 0, 0);
+        graphics_draw_sized_texture(background, 0, 0, 800, 600);
     }
 
     for (int i = 0; i < character_count; i++)
     {
-        if (character[i]) graphics_draw_texture(character[i], 300 + (i * 100), 100);
+        if (character[i]) graphics_scale_texture(character[i], 300 + (i * 100) - 100, 100 - 50 , 150);
     }
 
     if(map_loaded)
@@ -438,7 +461,7 @@ void script_render() {
     if (awaiting_choice) {
         for(int i=0; i<3; i++)
         {
-            graphics_draw_text(choices[i], 100, 450+50*i);
+            graphics_draw_text(choices[i], 100, 450+50*i, NULL, 255, 255, 255, 255);
         }
         //graphics_draw_text(choice1, 100, 450);
         //graphics_draw_text(choice2, 100, 500);
@@ -450,8 +473,8 @@ void script_render() {
         strncpy(partial, current_text, letter_index);
         // \0 to assign string
         partial[letter_index] = '\0';
-        graphics_draw_text(current_speaker, 50, 450);
-        graphics_draw_text(partial, 50, 500);
+        graphics_draw_text(current_speaker, 50, 450, speaker_bg, 255, 0, 0, 0);
+        graphics_draw_text(partial, 50, 490, text_bg, 255, 255, 255, 255);
     }
 
 

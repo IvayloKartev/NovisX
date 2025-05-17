@@ -11,7 +11,7 @@
 1746218434 /home/ivaylokartev/Projects/GameEngine/NovisX/engine.h
 	<stdbool.h>
 
-1746380710 /home/ivaylokartev/Projects/GameEngine/NovisX/graphics.h
+1747478726 /home/ivaylokartev/Projects/GameEngine/NovisX/graphics.h
 	<stdbool.h>
 	<SDL2/SDL.h>
 
@@ -429,7 +429,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1747325830 source:/home/ivaylokartev/Projects/GameEngine/NovisX/graphics.c
+1747478711 source:/home/ivaylokartev/Projects/GameEngine/NovisX/graphics.c
 	"graphics.h"
 	<SDL2/SDL_ttf.h>
 	<stdio.h>
@@ -466,7 +466,7 @@
 	<stdbool.h>
 	<SDL2/SDL.h>
 
-1746385508 source:/home/ivaylokartev/Projects/GameEngine/NovisX/menu.c
+1747477034 source:/home/ivaylokartev/Projects/GameEngine/NovisX/menu.c
 	"graphics.h"
 	"menu.h"
 	<stdio.h>
@@ -487,7 +487,7 @@
 	"graphics.h"
 	<SDL2/SDL.h>
 
-1747412666 source:/home/ivaylokartev/Projects/GameEngine/NovisX/player.c
+1747469589 source:/home/ivaylokartev/Projects/GameEngine/NovisX/player.c
 	"player.h"
 	"map.h"
 	<string.h>
@@ -589,7 +589,7 @@
 1715595195 /usr/include/libxml2/libxml/threads.h
 	<libxml/xmlversion.h>
 
-1747426759 source:/home/ivaylokartev/Projects/GameEngine/NovisX/parser.c
+1747478861 source:/home/ivaylokartev/Projects/GameEngine/NovisX/parser.c
 	"script.h"
 	"graphics.h"
 	<stdlib.h>

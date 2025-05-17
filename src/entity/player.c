@@ -51,7 +51,7 @@ void move_player(char* direction, int speed)
 
 void render_player()
 {
-    SDL_Rect dest = {x_pos, y_pos, 32, 32};
+    SDL_Rect dest = {400, 300, 32, 32};
     SDL_RenderCopy(gRenderer, player_sprites[current_sprite], NULL, &dest);
 }
 

@@ -1,5 +1,5 @@
 #include "../core/graphics.h"
-#include "../ui/menu.h"
+#include "menu.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -45,8 +45,8 @@ void init_menu(const char* filename)
             btn = graphics_load_texture(button_bg_path);
         }
     }
-    if(bg == NULL) bg = create_transparent_rect_texture(600, 100);
-    if(btn == NULL) btn = create_transparent_rect_texture(100, 60);
+    if(bg == NULL) bg = create_transparent_rect_texture(600, 100, 100, 50, 50, 50);
+    if(btn == NULL) btn = create_transparent_rect_texture(100, 60, 100, 50, 50, 50);
 }
 
 
