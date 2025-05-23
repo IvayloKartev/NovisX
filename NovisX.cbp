@@ -50,45 +50,50 @@
 			<Add library="libxml2" />
 		</Linker>
 		<Unit filename="Makefile" />
-		<Unit filename="dropdown.c">
+		<Unit filename="src/ui/components/dropdown.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="dropdown.h" />
-		<Unit filename="engine.c">
+		<Unit filename="src/ui/components/dropdown.h" />
+		<Unit filename="src/core/engine.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="engine.h" />
-		<Unit filename="graphics.c">
+		<Unit filename="src/core/engine.h" />
+		<Unit filename="src/core/graphics.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="graphics.h" />
-		<Unit filename="label.c">
+		<Unit filename="src/core/graphics.h" />
+		<Unit filename="src/ui/components/label.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="label.h" />
-		<Unit filename="main.c">
+		<Unit filename="src/ui/components/label.h" />
+		<Unit filename="src/ui/components/button.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="map.c">
+		<Unit filename="src/ui/components/button.h" />
+		<Unit filename="src/ui/components/components.h" />
+		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="map.h" />
-		<Unit filename="menu.c">
+		<Unit filename="src/ui/map.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="menu.h" />
-		<Unit filename="page.c">
+		<Unit filename="src/ui/map.h" />
+		<Unit filename="src/ui/menu.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="page.h" />
-		<Unit filename="parser.c">
+		<Unit filename="src/ui/menu.h" />
+		<Unit filename="src/screen/page.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="parser.h" />
-		<Unit filename="player.c">
+		<Unit filename="src/screen/page.h" />
+		<Unit filename="src/core/parser.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="player.h" />
+		<Unit filename="src/core/parser.h" />
+		<Unit filename="src/entity/player.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/entity/player.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

@@ -29,7 +29,20 @@ The engine can be used to develop simple games using XML-like scripting language
 - \<dialogue\> - a wrapper element, that contains \<say\> elements. Can be used inside panel component or separately
 - \<say\> - contains text to be displayed and the character saying it (if given). Can be used inside dialogue component or separately
 - \<choice\> - used to define a branching in the story. Contains text to be displayed and a script to be loaded. Can be wrapped within \<choices\> tag
-5. The engine's parser recognizes the following tags, useful for 2D top-down games:
+- \<page\> - used to declare a static page in the start.xml (static pages are explained in 5.)
+
+5. The engine supports development of static pages (for example, but not limited to, settings, stats, inventory, etc). They consist of UI elements and other tags:
+- \<static\> - the root node of each static page. This tag is required to distinguish between dynamic content (like switching panels in visual novels) and static content
+- \<font\> - a tag that can be a child node of every component that contains text. Allows to load a font from .ttf file and font size
+- \<color\> - a tag that can be a child node of every component that contains text. Allows to set text color using RBGA
+- \<label\> - used to define a label component (text suitable for headings and titles as well). Accepts \<font\> and \<color\> tags.
+- \<dropdown\> - used to build a dropdown menu. Supports different types (currently only "resolution"). Accepts \<font\>, \<color\> and \<options\>
+- \<options\> - wrapper tag for \<option\>  tags
+- \<option\> - each option of a dropdown menu. Contains action, which will be executed on click
+- \<button\> - defines a button. Supports different types (currently "exit_save" for exiting pages and "link" for redirecting to a particular script). Accepts maximum of one \<link\> tag
+- \<link\> - contains the path to the script to be executed on clicking of the button.
+
+6. The engine's parser recognizes the following tags, useful for 2D top-down games:
 - \<map\> - used to load a map from a 2D array file (each number in it can represent a separate tile). Wrapper tag for \<tile\>
 - \<tile\> - with its "file" attribute can be used to define tiles, that will be used with the loaded map to generate 2D terrain
 - \<player_sprite\> - used to define a 2D sprite, that can be controlled by the player to move accross the terrain. Wraps \<direction\> tags
