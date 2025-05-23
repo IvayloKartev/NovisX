@@ -2,11 +2,15 @@
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <SDL2/SDL_mixer.h>
+
 static Mix_Music* gMusic = NULL;
 
-static SDL_Window* gWindow = NULL;
+SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 static TTF_Font* gFont = NULL;
+
+int WINDOW_HEIGHT = 600;
+int WINDOW_WIDTH = 800;
 
 bool graphics_init()
 {
@@ -15,7 +19,7 @@ bool graphics_init()
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) return false;
 
     // creating a window and a renderer
-    gWindow = SDL_CreateWindow("NovisX", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+    gWindow = SDL_CreateWindow("NovisX", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 
     // initializing font
@@ -144,21 +148,29 @@ void graphics_draw_sized_texture(SDL_Texture* texture, int x, int y, int width, 
     SDL_RenderCopy(gRenderer, texture, &src, &dst);
 }
 
-void graphics_draw_text(const char* text, int x, int y, SDL_Texture* text_bg, int alpha, int r, int g, int b)
+void graphics_draw_text(const char* text, int x, int y, char* font_path, int font_size, SDL_Texture* text_bg, int alpha, int r, int g, int b)
 {
     if (text == NULL || text[0] == '\0') {
         //printf("Error: Text is empty.\n");
         return;
     }
 
+    SDL_Color color = {r, g, b, alpha};
+
     if (!gFont) {
         printf("Error: Font not loaded: %s\n", TTF_GetError());
         return;
     }
 
+    TTF_Font* font = NULL;
+    if(font_path && font_size > 0) font = TTF_OpenFont(font_path, font_size);
     // using built-in methods to generate text surface
-    SDL_Color white = {r, g, b, alpha};
-    SDL_Surface* surface = TTF_RenderText_Blended(gFont, text, white);
+
+    SDL_Surface* surface = NULL;
+    if(!font) surface = TTF_RenderText_Blended(gFont, text, color);
+    else surface = TTF_RenderText_Blended(font, text, color);
+
+    TTF_CloseFont(font);
     if (!surface) {
         printf("Error creating text surface: %s\n", TTF_GetError());
         return;
@@ -361,4 +373,48 @@ SDL_Texture* graphics_resize_texture(SDL_Texture* texture, int new_width, int ne
     SDL_SetRenderTarget(gRenderer, NULL);
 
     return resized_texture;
+}
+
+SDL_Texture* graphics_text_to_texture(const char* text, int x, int y, char* font_path, int font_size, SDL_Texture* text_bg, int alpha, int r, int g, int b)
+{
+    if (text == NULL || text[0] == '\0') {
+        //printf("Error: Text is empty.\n");
+        return NULL;
+    }
+
+    SDL_Color color = {r, g, b, alpha};
+
+    if (!gFont) {
+        printf("Error: Font not loaded: %s\n", TTF_GetError());
+        return NULL;
+    }
+
+    TTF_Font* font = NULL;
+    if(font_path && font_size > 0) font = TTF_OpenFont(font_path, font_size);
+    // using built-in methods to generate text surface
+
+    SDL_Surface* surface = NULL;
+    if(!font) surface = TTF_RenderText_Blended(gFont, text, color);
+    else surface = TTF_RenderText_Blended(font, text, color);
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(gRenderer, surface);
+    // surface is immediately removed to save memory
+    SDL_FreeSurface(surface);
+    return texture;
+}
+
+void get_texture_dimensions(SDL_Texture* texture, int* width, int* height)
+{
+    if (!texture) {
+        printf("Error: NULL texture passed to get_texture_dimensions\n");
+        if (width) *width = 0;
+        if (height) *height = 0;
+        return;
+    }
+
+    if (SDL_QueryTexture(texture, NULL, NULL, width, height) != 0) {
+        printf("Error querying texture dimensions: %s\n", SDL_GetError());
+        if (width) *width = 0;
+        if (height) *height = 0;
+    }
 }

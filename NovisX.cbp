@@ -50,6 +50,10 @@
 			<Add library="libxml2" />
 		</Linker>
 		<Unit filename="Makefile" />
+		<Unit filename="dropdown.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dropdown.h" />
 		<Unit filename="engine.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -58,6 +62,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="graphics.h" />
+		<Unit filename="label.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="label.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -69,10 +77,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="menu.h" />
+		<Unit filename="page.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="page.h" />
 		<Unit filename="parser.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="parser.h" />
+		<Unit filename="player.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="player.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

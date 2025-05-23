@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1747422125 source:/home/ivaylokartev/Projects/GameEngine/NovisX/engine.c
+1747993924 source:/home/ivaylokartev/Projects/GameEngine/NovisX/engine.c
 	"engine.h"
 	"graphics.h"
 	"parser.h"
@@ -7,11 +7,13 @@
 	"menu.h"
 	"player.h"
 	"map.h"
+	"page.h"
+	"label.h"
 
-1746218434 /home/ivaylokartev/Projects/GameEngine/NovisX/engine.h
+1747926139 /home/ivaylokartev/Projects/GameEngine/NovisX/engine.h
 	<stdbool.h>
 
-1747478726 /home/ivaylokartev/Projects/GameEngine/NovisX/graphics.h
+1747989298 /home/ivaylokartev/Projects/GameEngine/NovisX/graphics.h
 	<stdbool.h>
 	<SDL2/SDL.h>
 
@@ -429,7 +431,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1747478711 source:/home/ivaylokartev/Projects/GameEngine/NovisX/graphics.c
+1747996514 source:/home/ivaylokartev/Projects/GameEngine/NovisX/graphics.c
 	"graphics.h"
 	<SDL2/SDL_ttf.h>
 	<stdio.h>
@@ -466,13 +468,15 @@
 	<stdbool.h>
 	<SDL2/SDL.h>
 
-1747477034 source:/home/ivaylokartev/Projects/GameEngine/NovisX/menu.c
+1747926181 source:/home/ivaylokartev/Projects/GameEngine/NovisX/menu.c
 	"graphics.h"
 	"menu.h"
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
 	<SDL.h>
+	"engine.h"
+	"page.h"
 
 1747412636 /home/ivaylokartev/Projects/GameEngine/NovisX/player.h
 	<stdbool.h>
@@ -589,7 +593,7 @@
 1715595195 /usr/include/libxml2/libxml/threads.h
 	<libxml/xmlversion.h>
 
-1747478861 source:/home/ivaylokartev/Projects/GameEngine/NovisX/parser.c
+1747996687 source:/home/ivaylokartev/Projects/GameEngine/NovisX/parser.c
 	"script.h"
 	"graphics.h"
 	<stdlib.h>
@@ -600,4 +604,61 @@
 	<libxml/tree.h>
 	<stdio.h>
 	<string.h>
+	"page.h"
+	"engine.h"
+
+1747996149 /home/ivaylokartev/Projects/GameEngine/NovisX/page.h
+	"label.h"
+	"dropdown.h"
+	"button.h"
+
+1747930062 source:/home/ivaylokartev/Projects/GameEngine/NovisX/label.c
+	"label.h"
+	"graphics.h"
+	<libxml/parser.h>
+	<libxml/tree.h>
+	<stdlib.h>
+
+1747925363 /home/ivaylokartev/Projects/GameEngine/NovisX/label.h
+	<SDL.h>
+	<libxml/parser.h>
+	<libxml/tree.h>
+
+1747996956 source:/home/ivaylokartev/Projects/GameEngine/NovisX/page.c
+	"page.h"
+	<libxml/parser.h>
+	<libxml/tree.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"parser.h"
+	"label.h"
+	"graphics.h"
+	"engine.h"
+
+1747942234 /home/ivaylokartev/Projects/GameEngine/NovisX/dropdown.h
+	<SDL2/SDL.h>
+	<libxml/parser.h>
+	<libxml/tree.h>
+
+1747996804 source:/home/ivaylokartev/Projects/GameEngine/NovisX/dropdown.c
+	"dropdown.h"
+	"graphics.h"
+	<libxml/parser.h>
+	<libxml/tree.h>
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+
+1747996016 /home/ivaylokartev/Projects/GameEngine/NovisX/button.h
+	<SDL2/SDL.h>
+	<libxml/parser.h>
+	<libxml/tree.h>
+
+1747996095 source:/home/ivaylokartev/Projects/GameEngine/NovisX/button.c
+	"button.h"
+	"graphics.h"
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
 

@@ -5,9 +5,12 @@
 #include "../ui/menu.h"
 #include "../entity/player.h"
 #include "../ui/map.h"
+#include "../screen/page.h"
+#include "../ui/components/components.h"
 
-extern bool awaiting_choice;
-extern bool menu_visible = false;
+bool awaiting_choice = false;
+bool menu_visible = false;
+bool page_show = false;
 static bool running = true;
 
 bool engine_init()
@@ -69,6 +72,7 @@ void engine_run()
                         if (y > 450 && y < 480) script_choice_click(0);
                         else if (y > 500 && y < 530) script_choice_click(1);
                     }
+                    if(page_show) handle_page_event(x, y);
                 }
                 script_next();
             }
@@ -76,11 +80,19 @@ void engine_run()
             if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
                 menu_visible = !menu_visible;
             }
+            if (event.type == SDL_WINDOWEVENT)
+            {
+                printf("Window event: %d\n", event.window.event);
+            }
         }
 
         script_update();
         graphics_clear();
         script_render();
+        if(page_show)
+        {
+            render_page();
+        }
         if(menu_visible) render_menu();
         graphics_present();
 

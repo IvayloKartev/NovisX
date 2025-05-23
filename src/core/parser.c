@@ -7,6 +7,8 @@
 #include <libxml/tree.h>
 #include <stdio.h>
 #include <string.h>
+#include "../screen/page.h"
+#include "engine.h"
 
 #define MAX_COMMANDS 512
 #define MAX_CHARACTERS 10
@@ -43,7 +45,8 @@ typedef enum {
     CMD_MAP,
     CMD_PLAYER_SPRITE,
     CMD_MAP_TILE,
-    CMD_PANEL
+    CMD_PANEL,
+    CMD_PAGE
 } CommandType;
 
 // the object for one line of code - if new commands have more arguments, the maximum argument amount should be added
@@ -75,7 +78,7 @@ static Uint32 last_letter_time = 0;
 static int alpha_step = 255;
 static Uint32 alpha_step_time = 0;
 
-bool awaiting_choice = false;
+//bool awaiting_choice = false;
 bool map_loaded = false;
 static bool background_should_fade = false;
 
@@ -102,7 +105,8 @@ void add_command(CommandType type, const char* arg1, const char* arg2, PanelData
 // it returns PanelData struct, that is then passed as arg3 to a CMD_PANEL command
 // this is done because simply passing the whole XML node as an argument lead to segmentation faults, plus it is generally not a good idea to pass outside code around
 
-PanelData* extract_panel_data(xmlNode* panelNode) {
+PanelData* extract_panel_data(xmlNode* panelNode)
+{
     xmlNode* curr;
     PanelData* panelData = malloc(sizeof(PanelData));
     if (!panelData) return NULL;
@@ -192,7 +196,8 @@ PanelData* extract_panel_data(xmlNode* panelNode) {
 void parse_node(xmlNode* node) {
     for (xmlNode* curr = node; curr; curr = curr->next) {
         if (curr->type == XML_ELEMENT_NODE) {
-            if (strcmp((char*)curr->name, "panel") == 0) {
+            if (strcmp((char*)curr->name, "panel") == 0)
+            {
                 printf("About to process a panel: %s\n", (char*)curr->name);
                 PanelData* panelData = extract_panel_data(curr);
                 xmlChar* text_bg = xmlGetProp(curr, (const xmlChar*)"text-bg");
@@ -205,19 +210,22 @@ void parse_node(xmlNode* node) {
                 add_command(CMD_BACKGROUND, (char*)file, NULL, NULL);
                 xmlFree(file);
             }
-            else if (strcmp((char*)curr->name, "music") == 0) {
+            else if (strcmp((char*)curr->name, "music") == 0)
+            {
                 xmlChar* file = xmlGetProp(curr, (const xmlChar*)"file");
                 add_command(CMD_MUSIC, (char*)file, NULL, NULL);
                 xmlFree(file);
             }
-            else if (strcmp((char*)curr->name, "character") == 0) {
+            else if (strcmp((char*)curr->name, "character") == 0)
+            {
                 xmlChar* sprite = xmlGetProp(curr, (const xmlChar*)"sprite");
                 xmlChar* name = xmlGetProp(curr, (const xmlChar*)"name");
                 add_command(CMD_CHARACTER, (char*)sprite, (char*)name, NULL);
                 xmlFree(sprite);
                 xmlFree(name);
             }
-            else if (strcmp((char*)curr->name, "map") == 0) {
+            else if (strcmp((char*)curr->name, "map") == 0)
+            {
                 xmlChar* name = xmlGetProp(curr, (const xmlChar*)"name");
                 xmlChar* file = xmlGetProp(curr, (const xmlChar*)"file");
                 add_command(CMD_MAP, (char*)name, (char*)file, NULL);
@@ -229,7 +237,8 @@ void parse_node(xmlNode* node) {
                 add_command(CMD_MAP_TILE, (char*)file, NULL, NULL);
                 xmlFree(file);
             }
-            else if (strcmp((char*)curr->name, "direction") == 0) {
+            else if (strcmp((char*)curr->name, "direction") == 0)
+            {
                 xmlChar* file = xmlGetProp(curr, (const xmlChar*)"file");
                 strncpy(direction_sprite_files[sprite_files_index], (char*)file, sizeof(direction_sprite_files[sprite_files_index]));
                 sprite_files_index++;
@@ -240,14 +249,16 @@ void parse_node(xmlNode* node) {
                 }
                 xmlFree(file);
             }
-            else if (strcmp((char*)curr->name, "say") == 0) {
+            else if (strcmp((char*)curr->name, "say") == 0)
+            {
                 xmlChar* speaker = xmlGetProp(curr, (const xmlChar*)"speaker");
                 xmlChar* text = xmlNodeGetContent(curr);
                 add_command(CMD_SAY, (char*)speaker, (char*)text, NULL);
                 xmlFree(speaker);
                 xmlFree(text);
             }
-            else if (strcmp((char*)curr->name, "choice") == 0) {
+            else if (strcmp((char*)curr->name, "choice") == 0)
+            {
                 xmlChar* text = xmlGetProp(curr, (const xmlChar*)"text");
                 xmlChar* script = xmlGetProp(curr, (const xmlChar*)"script");
                 add_command(CMD_CHOICE, (char*)text, (char*)script, NULL);
@@ -258,6 +269,41 @@ void parse_node(xmlNode* node) {
                 xmlChar* script = xmlGetProp(curr, (const xmlChar*)"script");
                 add_command(CMD_MENU, (char*)script, NULL, NULL);
                 xmlFree(script);
+            }
+            else if (strcmp((char*)curr->name, "page") == 0)
+            {
+                xmlChar* script = xmlGetProp(curr, (const xmlChar*)"file");
+                add_command(CMD_PAGE, (char*)script, NULL, NULL);
+                xmlFree(script);
+            }
+            else if (strcmp((char*)curr->name, "label") == 0)
+            {
+                Label* label_data = assemble_label_xml(curr);
+                printf("AFTER ASSEMBLY: %s %d %d\n", label_data->text, label_data->x_pos, label_data->y_pos);
+                page_data.labels[page_data.labels_count] = *label_data;
+                page_data.labels_count++;
+                free(label_data);
+            }
+            else if (strcmp((char*)curr->name, "static") == 0)
+            {
+                printf("Entering a page: %s\n", (char*)curr->name);
+                xmlChar* bg = xmlGetProp(curr, (const xmlChar*)"background");
+                page_data.background = graphics_load_texture((char*)bg);
+            }
+            else if (strcmp((char*)curr->name, "dropdown") == 0)
+            {
+                Dropdown* dropdown_data = assemble_dropdown_xml(curr);
+                page_data.dropdowns[page_data.dropdowns_count] = *dropdown_data;
+                page_data.dropdowns_count++;
+                free(dropdown_data);
+            }
+            else if (strcmp((char*)curr->name, "button") == 0)
+            {
+                printf("DETECTED BUTTON\n");
+                Button* button_data = assemble_button_xml(curr);
+                page_data.buttons[page_data.buttons_count] = *button_data;
+                page_data.buttons_count++;
+                free(button_data);
             }
         }
         // if it is not a panel, recursively go in deeper nodes
@@ -353,13 +399,16 @@ void script_next() {
         case CMD_CHOICE:
             strcpy(choices[choice_index], cmd->arg1);
             strcpy(choices_files[choice_index], cmd->arg2);
-            printf("Just speichert: %s\n", choices_files[choice_index]);
             awaiting_choice = true;
             choice_index++;
             break;
         case CMD_MENU:
             printf("Initializing menu: %s", cmd->arg1);
             init_menu("assets/menu.txt");
+            break;
+        case CMD_PAGE:
+            printf("Initializing page: %s", cmd->arg1);
+            load_page(cmd->arg1);
             break;
         case CMD_MAP:
             printf("MAP TO BE LOADED: %s\n", cmd->arg1);
@@ -407,7 +456,7 @@ void script_next() {
                 if(strcmp(cmd->arg1, "default") == 0)
                 {
                     printf("About to draw textbg\n");
-                    text_bg = create_transparent_rect_texture(800, 200, 200, 50, 50, 50);
+                    text_bg = create_transparent_rect_texture(WINDOW_WIDTH, 200, 200, 50, 50, 50);
                 }
             }
             if (cmd->arg2)
@@ -417,7 +466,7 @@ void script_next() {
                     printf("???");
                 }
                 printf("About to draw speakerbg\n");
-                speaker_bg = graphics_resize_texture(graphics_load_texture(cmd->arg2), 800, 40);
+                speaker_bg = graphics_resize_texture(graphics_load_texture(cmd->arg2), WINDOW_WIDTH, 40);
                 //speaker_bg = create_transparent_rect_texture(800, 200, 200, 50, 50, 50);
             }
             //free(cmd->arg3);
@@ -441,11 +490,11 @@ void script_render() {
         graphics_draw_texture(background, 0, 0); // fully opaque
         SDL_SetTextureBlendMode(previous_background, SDL_BLENDMODE_BLEND);
         SDL_SetTextureAlphaMod(previous_background, alpha_step);
-        graphics_draw_sized_texture(previous_background, 0, 0, 800, 600);
+        graphics_draw_sized_texture(previous_background, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
     else if (background)
     {
-        graphics_draw_sized_texture(background, 0, 0, 800, 600);
+        graphics_draw_sized_texture(background, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     for (int i = 0; i < character_count; i++)
@@ -461,7 +510,7 @@ void script_render() {
     if (awaiting_choice) {
         for(int i=0; i<3; i++)
         {
-            graphics_draw_text(choices[i], 100, 450+50*i, NULL, 255, 255, 255, 255);
+            graphics_draw_text(choices[i], 100, 450+50*i, NULL, 0, NULL, 255, 255, 255, 255);
         }
         //graphics_draw_text(choice1, 100, 450);
         //graphics_draw_text(choice2, 100, 500);
@@ -473,8 +522,8 @@ void script_render() {
         strncpy(partial, current_text, letter_index);
         // \0 to assign string
         partial[letter_index] = '\0';
-        graphics_draw_text(current_speaker, 50, 450, speaker_bg, 255, 0, 0, 0);
-        graphics_draw_text(partial, 50, 490, text_bg, 255, 255, 255, 255);
+        graphics_draw_text(current_speaker, 50, 450, NULL, 0, speaker_bg, 255, 0, 0, 0);
+        graphics_draw_text(partial, 50, 490, NULL, 0, text_bg, 255, 255, 255, 255);
     }
 
 

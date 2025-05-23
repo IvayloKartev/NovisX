@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <SDL.h>
+#include "../core/engine.h"
+#include "../screen/page.h"
 
 #define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
 
@@ -126,7 +128,9 @@ bool menu_event_handler(SDL_Event* e) {
 
         for (int i = 0; i < LEN(button_labels); i++) {
             if (SDL_PointInRect(&(SDL_Point){x, y}, &button_rects[i])) {
-                printf("Button %d clicked: %s\n", i, button_labels[i]);
+                printf("Button %d clicked: %s\n", i, button_paths[i]);
+                page_show = true;
+                load_page(button_paths[i]);
                 //execute_button_action(button_paths[i]);
                 return true; // handled
             }
