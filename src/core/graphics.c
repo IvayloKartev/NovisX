@@ -2,6 +2,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL_image.h>
 
 static Mix_Music* gMusic = NULL;
 
@@ -417,4 +418,23 @@ void get_texture_dimensions(SDL_Texture* texture, int* width, int* height)
         if (width) *width = 0;
         if (height) *height = 0;
     }
+}
+
+SDL_Texture* graphics_load_texture_png(const char* filename)
+{
+    SDL_Surface* surface = IMG_Load(filename);
+    if (!surface) {
+        printf("Failed to load image %s: %s\n", filename, IMG_GetError());
+        return NULL;
+    }
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(gRenderer, surface);
+    SDL_FreeSurface(surface);
+
+    if (!texture) {
+        printf("Failed to create texture from %s: %s\n", filename, SDL_GetError());
+        return NULL;
+    }
+
+    return texture;
 }

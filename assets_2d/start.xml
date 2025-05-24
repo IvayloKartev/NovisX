@@ -1,0 +1,46 @@
+<script>
+        <menu file="assets/menu.txt"/>
+        <play>
+        <!-- Map and Tiles -->
+        <map type="terrain_map" file="assets5/terrain.txt">
+            // grass - 0
+            <tile file="assets5/tiles/FieldsTile_38.bmp" />
+            // left - 1
+            <tile file="assets5/tiles/FieldsTile_13.bmp" />
+            // center - 2
+            <tile file="assets5/tiles/FieldsTile_01.bmp" />
+            // right - 3
+            <tile file="assets5/tiles/FieldsTile_17.bmp" />
+            // top - 4
+            <tile file="assets5/tiles/FieldsTile_35.bmp" />
+            // bottom - 5 
+            <tile file="assets5/tiles/FieldsTile_64.bmp" />
+            // top right corner - 6
+            <tile file="assets5/tiles/FieldsTile_12.bmp" />
+            // bottom right corner - 7
+            <tile file="assets5/tiles/FieldsTile_24.bmp" />
+            // bottom left corner - 8
+            <tile file="assets5/tiles/FieldsTile_22.bmp" />
+            // top left corner - 9
+            <tile file="assets5/tiles/FieldsTile_06.bmp" />
+        </map>
+
+        <map type="object_map" file="assets5/objects_map.txt">
+            <tile file=""/>
+            <tile file="assets5/objects/grass/1.png"/>
+            <tile file="assets5/objects/grass/2.png"/>
+            <tile file="assets5/objects/stone/1.png"/>
+            <tile file="assets5/objects/stone/2.png"/>
+            <tile file="assets5/objects/bush/1.png"/>
+            <tile file="assets5/objects/decor/Tree1.png"/>
+            <tile file="assets5/objects/camp/5.png"/>
+        </map>
+        <!-- Player Sprites -->
+        <player_sprite>
+            <direction file="assets5/player_b.png" />
+            <direction file="assets5/player_f.png" />
+            <direction file="assets5/player_r.png" />
+            <direction file="assets5/player_l.png" />
+        </player_sprite>
+    </play>
+</script>

@@ -19,6 +19,8 @@ SDL_Texture* combine_textures(SDL_Texture* textures[*], int x_positions[*], int 
 SDL_Texture* create_transparent_rect_texture(int width, int height, int alpha, int r, int g, int b);
 SDL_Texture* graphics_load_text(char* text);
 SDL_Texture* graphics_resize_texture(SDL_Texture* texture, int new_width, int new_height);
+void get_texture_dimensions(SDL_Texture* texture, int* width, int* height);
+SDL_Texture* graphics_load_texture_png(const char* filename);
 
 extern SDL_Renderer* gRenderer; // shared
 extern SDL_Window* gWindow;

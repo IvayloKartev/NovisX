@@ -15,10 +15,10 @@ bool show_player = false;
 
 void load_player_sprites(char* filename_up, char* filename_down, char* filename_right, char* filename_left)
 {
-    player_sprites[0] = graphics_load_texture(filename_up);
-    player_sprites[1] = graphics_load_texture(filename_down);
-    player_sprites[2] = graphics_load_texture(filename_right);
-    player_sprites[3] = graphics_load_texture(filename_left);
+    player_sprites[0] = graphics_load_texture_png(filename_up);
+    player_sprites[1] = graphics_load_texture_png(filename_down);
+    player_sprites[2] = graphics_load_texture_png(filename_right);
+    player_sprites[3] = graphics_load_texture_png(filename_left);
 }
 
 void move_player(char* direction, int speed)
@@ -51,7 +51,12 @@ void move_player(char* direction, int speed)
 
 void render_player()
 {
-    SDL_Rect dest = {400, 300, 32, 32};
+    int player_width = 0;
+    int player_height = 0;
+
+    get_texture_dimensions(player_sprites[current_sprite], &player_width, &player_height);
+
+    SDL_Rect dest = {400, 300, player_width, player_height};
     SDL_RenderCopy(gRenderer, player_sprites[current_sprite], NULL, &dest);
 }
 

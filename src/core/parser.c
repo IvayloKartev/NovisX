@@ -82,14 +82,17 @@ static Uint32 alpha_step_time = 0;
 bool map_loaded = false;
 static bool background_should_fade = false;
 
-static SDL_Texture* tile_textures[3];
+static SDL_Texture* tile_textures[3][36];
 static int tile_texture_current_index = 0;
+static int current_tile_set = -1;
 
 static char direction_sprite_files[4][256];
 int sprite_files_index = 0;
 
 static SDL_Texture* text_bg = NULL;
 static SDL_Texture* speaker_bg = NULL;
+
+char** current_loaded_map = NULL;
 
 void add_command(CommandType type, const char* arg1, const char* arg2, PanelData* arg3) {
     if (command_count < MAX_COMMANDS) {
@@ -226,7 +229,7 @@ void parse_node(xmlNode* node) {
             }
             else if (strcmp((char*)curr->name, "map") == 0)
             {
-                xmlChar* name = xmlGetProp(curr, (const xmlChar*)"name");
+                xmlChar* name = xmlGetProp(curr, (const xmlChar*)"type");
                 xmlChar* file = xmlGetProp(curr, (const xmlChar*)"file");
                 add_command(CMD_MAP, (char*)name, (char*)file, NULL);
                 xmlFree(name);
@@ -412,12 +415,16 @@ void script_next() {
             break;
         case CMD_MAP:
             printf("MAP TO BE LOADED: %s\n", cmd->arg1);
-            map_loaded = load_map(cmd->arg2);
+            tile_texture_current_index = 0;
+            //memset(tile_textures, 0, sizeof(tile_textures));
+            if (strcmp((char*)cmd->arg1, "terrain_map") == 0) map_loaded = load_map(cmd->arg2);
+            else if (strcmp((char*)cmd->arg1, "object_map") == 0) current_loaded_map = load_2D_map(cmd->arg2);
             printf("MAP_LOADED: %b\n", map_loaded);
+            current_tile_set++;
             break;
         case CMD_MAP_TILE:
             printf("%s\n", &(cmd->arg1));
-            tile_textures[tile_texture_current_index] = graphics_load_texture(cmd->arg1);
+            tile_textures[current_tile_set][tile_texture_current_index] = graphics_load_texture_png(cmd->arg1);
             tile_texture_current_index++;
             printf("Assigned textures");
             break;
@@ -504,7 +511,11 @@ void script_render() {
 
     if(map_loaded)
     {
-        render_map(gRenderer, tile_textures);
+        render_map(gRenderer, tile_textures[0]); //temporary giving 0
+    }
+    if(current_loaded_map)
+    {
+        render_map_from_file(gRenderer, tile_textures[1], current_loaded_map);
     }
     if(show_player) render_player();
     if (awaiting_choice) {
