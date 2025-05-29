@@ -7,11 +7,13 @@
 #include "../ui/map.h"
 #include "../screen/page.h"
 #include "../ui/components/components.h"
+#include "parser.h"
 
 bool awaiting_choice = false;
 bool menu_visible = false;
 bool page_show = false;
 static bool running = true;
+int player_speed = 10;
 
 bool engine_init()
 {
@@ -41,23 +43,33 @@ void engine_run()
             {
                 if (event.key.keysym.sym == SDLK_UP)
                 {
-                    printf("MOVING UP\n");
-                    move_player("up", 10);
+                    //printf("MOVING UP\n");
+                    if (can_jump)
+                    {
+                        printf("JUMP\n");
+                        player_jump();
+                    }
+                    else
+                        move_player("up", player_speed);
                 }
                 else if (event.key.keysym.sym == SDLK_DOWN)
                 {
                     printf("MOVING DOWN\n");
-                    move_player("down", 10);
+                    move_player("down", player_speed);
                 }
                 else if (event.key.keysym.sym == SDLK_RIGHT)
                 {
                     printf("MOVING RIGHT\n");
-                    move_player("right", 10);
+                    move_player("right", player_speed);
                 }
                 else if (event.key.keysym.sym == SDLK_LEFT)
                 {
                     printf("MOVING LEFT\n");
-                    move_player("left", 10);
+                    move_player("left", player_speed);
+                }
+                else if (event.key.keysym.sym == SDLK_SPACE)
+                {
+                    player_jump();
                 }
             }
             // checks for mouse clicks and keyboard presses types of events
@@ -93,6 +105,8 @@ void engine_run()
         {
             render_page();
         }
+        if(show_player) update_player();
+        if(show_player) render_player();
         if(menu_visible) render_menu();
         graphics_present();
 

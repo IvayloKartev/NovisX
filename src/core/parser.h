@@ -29,4 +29,7 @@ void script_render();
 void script_update();
 void script_choice_click(int index);
 
+extern bool tile_has_collision[36];
+extern char** current_loaded_map;
+
 #endif

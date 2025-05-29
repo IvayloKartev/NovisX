@@ -11,5 +11,7 @@ bool engine_init();
 void engine_run();
 void engine_shutdown();
 
+extern int player_speed;
+
 #endif
 

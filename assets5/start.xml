@@ -32,11 +32,12 @@
             <tile file="assets5/objects/stone/1.png"/>
             <tile file="assets5/objects/stone/2.png"/>
             <tile file="assets5/objects/bush/1.png"/>
-            <tile file="assets5/objects/decor/Tree1.png"/>
+            <tile file="assets5/objects/decor/Tree1.png" collision="true"/>
             <tile file="assets5/objects/camp/5.png"/>
         </map>
         <!-- Player Sprites -->
-        <player_sprite>
+        <player_sprite gravity="down" speed="10">
+            <jump height="300"/>
             <direction file="assets5/player_b.png" />
             <direction file="assets5/player_f.png" />
             <direction file="assets5/player_r.png" />

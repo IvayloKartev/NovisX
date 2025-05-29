@@ -2,7 +2,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <SDL2/SDL_mixer.h>
-#include <SDL_image.h>
+#include <SDL2/SDL_image.h>
 
 static Mix_Music* gMusic = NULL;
 
@@ -407,14 +407,14 @@ SDL_Texture* graphics_text_to_texture(const char* text, int x, int y, char* font
 void get_texture_dimensions(SDL_Texture* texture, int* width, int* height)
 {
     if (!texture) {
-        printf("Error: NULL texture passed to get_texture_dimensions\n");
+        //printf("Error: NULL texture passed to get_texture_dimensions\n");
         if (width) *width = 0;
         if (height) *height = 0;
         return;
     }
 
     if (SDL_QueryTexture(texture, NULL, NULL, width, height) != 0) {
-        printf("Error querying texture dimensions: %s\n", SDL_GetError());
+        //printf("Error querying texture dimensions: %s\n", SDL_GetError());
         if (width) *width = 0;
         if (height) *height = 0;
     }

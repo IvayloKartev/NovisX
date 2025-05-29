@@ -46,7 +46,9 @@ typedef enum {
     CMD_PLAYER_SPRITE,
     CMD_MAP_TILE,
     CMD_PANEL,
-    CMD_PAGE
+    CMD_PAGE,
+    CMD_PLAYER,
+    CMD_PLAYER_JUMP
 } CommandType;
 
 // the object for one line of code - if new commands have more arguments, the maximum argument amount should be added
@@ -85,6 +87,7 @@ static bool background_should_fade = false;
 static SDL_Texture* tile_textures[3][36];
 static int tile_texture_current_index = 0;
 static int current_tile_set = -1;
+bool tile_has_collision[36] = { false };
 
 static char direction_sprite_files[4][256];
 int sprite_files_index = 0;
@@ -237,8 +240,15 @@ void parse_node(xmlNode* node) {
             }
             else if (strcmp((char*)curr->name, "tile") == 0) {
                 xmlChar* file = xmlGetProp(curr, (const xmlChar*)"file");
-                add_command(CMD_MAP_TILE, (char*)file, NULL, NULL);
+                xmlChar* add_collison = xmlGetProp(curr, (const xmlChar*)"collision");
+                add_command(CMD_MAP_TILE, (char*)file, add_collison, NULL);
                 xmlFree(file);
+            }
+            else if (strcmp((char*)curr->name, "player_sprite") == 0) {
+                xmlChar* gravity = xmlGetProp(curr, (const xmlChar*)"gravity");
+                xmlChar* speed = xmlGetProp(curr, (const xmlChar*)"speed");
+                add_command(CMD_PLAYER, (char*)gravity, (char*)speed, NULL);
+                xmlFree(gravity);
             }
             else if (strcmp((char*)curr->name, "direction") == 0)
             {
@@ -259,6 +269,12 @@ void parse_node(xmlNode* node) {
                 add_command(CMD_SAY, (char*)speaker, (char*)text, NULL);
                 xmlFree(speaker);
                 xmlFree(text);
+            }
+            else if (strcmp((char*)curr->name, "jump") == 0)
+            {
+                xmlChar* height = xmlGetProp(curr, (const xmlChar*)"height");
+                add_command(CMD_PLAYER_JUMP, (char*)height, NULL, NULL);
+                xmlFree(height);
             }
             else if (strcmp((char*)curr->name, "choice") == 0)
             {
@@ -424,13 +440,38 @@ void script_next() {
             break;
         case CMD_MAP_TILE:
             printf("%s\n", &(cmd->arg1));
+            printf("Is collision on: %s\n", cmd->arg2);
             tile_textures[current_tile_set][tile_texture_current_index] = graphics_load_texture_png(cmd->arg1);
+
+            if (strcmp(cmd->arg2, "true") == 0)
+            {
+                tile_has_collision[tile_texture_current_index] = true;
+            }
+            else
+            {
+                tile_has_collision[tile_texture_current_index] = false;
+            }
+
             tile_texture_current_index++;
             printf("Assigned textures");
             break;
         case CMD_PLAYER_SPRITE:
             load_player_sprites(direction_sprite_files[0], direction_sprite_files[1], direction_sprite_files[2], direction_sprite_files[3]);
             show_player = true;
+            break;
+        case CMD_PLAYER:
+            if(strcmp(cmd->arg1, "none") != 0)
+            {
+                printf("SETTING GRAVITY\n");
+                has_gravity = true;
+                set_player_gravity(cmd->arg1);
+            }
+            else has_gravity = false;
+            player_speed = atoi(cmd->arg2);
+            break;
+        case CMD_PLAYER_JUMP:
+            float height = atof(cmd->arg1);
+            enable_player_jump(height);
             break;
         case CMD_PANEL:
             if (cmd->arg3)
@@ -517,7 +558,7 @@ void script_render() {
     {
         render_map_from_file(gRenderer, tile_textures[1], current_loaded_map);
     }
-    if(show_player) render_player();
+    //if(show_player) render_player();
     if (awaiting_choice) {
         for(int i=0; i<3; i++)
         {

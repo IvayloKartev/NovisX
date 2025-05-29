@@ -93,7 +93,7 @@ void move_camera(int player_x, int player_y)
     cam_y = clamp((player_y - (WINDOW_HEIGHT / 2)), 0, (MAP_SIZE * TILE_SIZE) - WINDOW_HEIGHT);
     cam_x = player_x;
     cam_y = player_y;
-    printf("Current camera coordinates: (%d; %d)\n", cam_x, cam_y);
+    //printf("Current camera coordinates: (%d; %d)\n", cam_x, cam_y);
 }
 
 void render_map(SDL_Renderer* renderer, SDL_Texture* textures[36])
