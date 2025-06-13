@@ -11,5 +11,6 @@ void render_map(SDL_Renderer* renderer, SDL_Texture* textures[3]);
 void assign_textures(SDL_Texture** textures, int textures_length);
 void render_map_from_file(SDL_Renderer* renderer, SDL_Texture* textures[3], char** current_map);
 char** load_2D_map(char* filename);
+int get_tile_at(int x, int y, char** map);
 
 #endif

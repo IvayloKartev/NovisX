@@ -36,8 +36,7 @@
             <tile file="assets5/objects/camp/5.png"/>
         </map>
         <!-- Player Sprites -->
-        <player_sprite gravity="down" speed="10">
-            <jump height="300"/>
+        <player_sprite gravity="none" speed="10">
             <direction file="assets5/player_b.png" />
             <direction file="assets5/player_f.png" />
             <direction file="assets5/player_r.png" />

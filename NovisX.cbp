@@ -19,6 +19,7 @@
 					<Add library="SDL2_mixer" />
 					<Add library="SDL2_ttf" />
 					<Add library="libxml2" />
+					<Add library="SDL2_image" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -35,6 +36,7 @@
 					<Add library="SDL2_mixer" />
 					<Add library="SDL2_ttf" />
 					<Add library="libxml2" />
+					<Add library="SDL_image" />
 				</Linker>
 			</Target>
 		</Build>
@@ -48,12 +50,10 @@
 			<Add library="SDL2_mixer" />
 			<Add library="SDL2_ttf" />
 			<Add library="libxml2" />
+			<Add library="SDL2_image" />
+			<Add library="libm" />
 		</Linker>
 		<Unit filename="Makefile" />
-		<Unit filename="src/ui/components/dropdown.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/ui/components/dropdown.h" />
 		<Unit filename="src/core/engine.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -62,30 +62,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/core/graphics.h" />
-		<Unit filename="src/ui/components/label.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/ui/components/label.h" />
-		<Unit filename="src/ui/components/button.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/ui/components/button.h" />
-		<Unit filename="src/ui/components/components.h" />
-		<Unit filename="src/main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/ui/map.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/ui/map.h" />
-		<Unit filename="src/ui/menu.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/ui/menu.h" />
-		<Unit filename="src/screen/page.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src/screen/page.h" />
 		<Unit filename="src/core/parser.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -94,6 +70,38 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/entity/player.h" />
+		<Unit filename="src/entity/events.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/entity/events.h" />
+		<Unit filename="src/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/screen/page.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/screen/page.h" />
+		<Unit filename="src/ui/components/button.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/ui/components/button.h" />
+		<Unit filename="src/ui/components/components.h" />
+		<Unit filename="src/ui/components/dropdown.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/ui/components/dropdown.h" />
+		<Unit filename="src/ui/components/label.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/ui/components/label.h" />
+		<Unit filename="src/ui/map.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/ui/map.h" />
+		<Unit filename="src/ui/menu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/ui/menu.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

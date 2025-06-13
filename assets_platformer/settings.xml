@@ -1,0 +1,25 @@
+<static background="assets/bg.bmp">
+  <label text="Title" x="300" y="20">
+    <font file="assets/font.ttf" size="36"/>
+    <color r="255" g="255" b="255" a="255"/>
+  </label>
+  <dropdown label="Choose resolution" type="resolution">
+       <font path="assets/font.ttf" size="36"/>
+        <color r="255" g="255" b="255" a="255" />
+        <options>
+                <option action="800x600">800x600</option>
+                <option action="1280x720">1280x720</option>
+                <option action="full">Fullscreen</option>
+                <option action="window">Windowed</option>
+        </options>
+  </dropdown>
+  <button text="Save and exit" action="exit_page" x="200" y ="200" width="200" height="50">
+        <font path="assets/font.ttf" size="16"/>
+        <color r="255" g="255" b="255" a="255" />
+  </button>
+</static>
+
+
+
+
+

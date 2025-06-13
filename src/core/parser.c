@@ -9,6 +9,7 @@
 #include <string.h>
 #include "../screen/page.h"
 #include "engine.h"
+#include "../entity/events.h"
 
 #define MAX_COMMANDS 512
 #define MAX_CHARACTERS 10
@@ -48,7 +49,8 @@ typedef enum {
     CMD_PANEL,
     CMD_PAGE,
     CMD_PLAYER,
-    CMD_PLAYER_JUMP
+    CMD_PLAYER_JUMP,
+    CMD_ONCOLLISION
 } CommandType;
 
 // the object for one line of code - if new commands have more arguments, the maximum argument amount should be added
@@ -324,6 +326,12 @@ void parse_node(xmlNode* node) {
                 page_data.buttons_count++;
                 free(button_data);
             }
+            else if (strcmp((char*)curr->name, "collision_event") == 0)
+            {
+                xmlChar* script = xmlGetProp(curr, (const xmlChar*)"script");
+                xmlChar* tile_index = xmlGetProp(curr->parent, (const xmlChar*)"index");
+                add_command(CMD_ONCOLLISION, (char*)tile_index, (char*)script, NULL);
+            }
         }
         // if it is not a panel, recursively go in deeper nodes
         if (strcmp((char*)curr->name, "panel") != 0)
@@ -472,6 +480,12 @@ void script_next() {
         case CMD_PLAYER_JUMP:
             float height = atof(cmd->arg1);
             enable_player_jump(height);
+            break;
+        case CMD_ONCOLLISION:
+            int tile_index = atoi(cmd->arg1);
+            char* script = cmd->arg2;
+            if (tile_index >= 0 && tile_index < MAX_TILE_TYPES)
+                tile_collision_scripts[tile_index] = strdup(cmd->arg2);
             break;
         case CMD_PANEL:
             if (cmd->arg3)

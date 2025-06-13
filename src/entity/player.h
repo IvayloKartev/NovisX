@@ -11,6 +11,7 @@ void set_player_gravity(const char* dir);
 void update_player();
 void enable_player_jump(float height);
 void player_jump();
+void switch_resolution();
 
 extern bool show_player;
 extern bool can_jump;

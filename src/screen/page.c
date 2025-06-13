@@ -8,6 +8,7 @@
 #include "../ui/components/components.h"
 #include "../core/graphics.h"
 #include "../core/engine.h"
+#include "../entity/player.h"
 
 PageData page_data = {
     .background = NULL,
@@ -97,6 +98,8 @@ void handler_function(const char* action)
     }
     SDL_PumpEvents();
     SDL_RenderPresent(gRenderer); // after unmounting the renderer, the resolution is switched and it is mounted again
+
+    switch_resolution();
 }
 
 void free_page_data()

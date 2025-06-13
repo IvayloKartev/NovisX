@@ -1,0 +1,16 @@
+<script>
+    <play>
+        <map type="terrain_map" file="assets_platformer/terrain_map.txt">
+            <tile file="assets_platformer/tile_1.bmp" />
+            <tile file="assets_platformer/tile_2.png" />
+            <tile file="assets_platformer/tile_3.png" />
+        </map>
+        <player_sprite gravity="down" speed="10">
+            <jump height="300"/>
+            <direction file="assets_platformer/player_r.png" />
+            <direction file="assets_platformer/player_r.png" />
+            <direction file="assets_platformer/player_r.png" />
+            <direction file="assets_platformer/player_r.png" />
+        </player_sprite>
+    </play>
+</script>

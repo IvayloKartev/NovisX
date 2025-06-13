@@ -662,7 +662,7 @@
 	<stdlib.h>
 	<stdio.h>
 
-1748556239 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/core/engine.c
+1749321951 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/core/engine.c
 	"engine.h"
 	"graphics.h"
 	"parser.h"
@@ -690,11 +690,11 @@
 	<stdbool.h>
 	<SDL2/SDL.h>
 
-1748556741 /home/ivaylokartev/Projects/GameEngine/git/NovisX/src/entity/player.h
+1749829225 /home/ivaylokartev/Projects/GameEngine/git/NovisX/src/entity/player.h
 	<stdbool.h>
 	<SDL2/SDL.h>
 
-1748100596 /home/ivaylokartev/Projects/GameEngine/git/NovisX/src/ui/map.h
+1749832588 /home/ivaylokartev/Projects/GameEngine/git/NovisX/src/ui/map.h
 	<stdbool.h>
 	<SDL2/SDL.h>
 
@@ -728,18 +728,19 @@
 	<SDL2/SDL_mixer.h>
 	<SDL2/SDL_image.h>
 
-1748557556 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/entity/player.c
+1749833443 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/entity/player.c
 	"player.h"
 	"../ui/map.h"
 	<string.h>
 	"../core/graphics.h"
 	"../core/parser.h"
 	<math.h>
+	"events.h"
 
 1747427567 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/main.c
 	"core/engine.h"
 
-1747998332 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/screen/page.c
+1749829253 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/screen/page.c
 	"page.h"
 	<libxml/parser.h>
 	<libxml/tree.h>
@@ -750,6 +751,7 @@
 	"../ui/components/components.h"
 	"../core/graphics.h"
 	"../core/engine.h"
+	"../entity/player.h"
 
 1747998431 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/ui/components/button.c
 	"button.h"
@@ -774,7 +776,7 @@
 	<libxml/tree.h>
 	<stdlib.h>
 
-1747998388 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/ui/menu.c
+1749830112 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/ui/menu.c
 	"../core/graphics.h"
 	"menu.h"
 	<stdio.h>
@@ -784,7 +786,7 @@
 	"../core/engine.h"
 	"../screen/page.h"
 
-1748557042 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/core/parser.c
+1749832928 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/core/parser.c
 	"graphics.h"
 	<stdlib.h>
 	"../ui/menu.h"
@@ -796,8 +798,9 @@
 	<string.h>
 	"../screen/page.h"
 	"engine.h"
+	"../../events.h"
 
-1748555648 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/ui/map.c
+1749832602 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/ui/map.c
 	"map.h"
 	"../core/graphics.h"
 	<SDL2/SDL.h>
@@ -807,4 +810,16 @@
 	"SDL_version.h"
 	"begin_code.h"
 	"close_code.h"
+
+1749832082 /home/ivaylokartev/Projects/GameEngine/git/NovisX/events.h
+
+1749832491 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/events.c
+	"events.h"
+	<stdio.h>
+
+1749833359 source:/home/ivaylokartev/Projects/GameEngine/git/NovisX/src/entity/events.c
+	"events.h"
+	<stdio.h>
+
+1749832082 /home/ivaylokartev/Projects/GameEngine/git/NovisX/src/entity/events.h
 

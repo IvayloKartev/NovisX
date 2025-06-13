@@ -2,8 +2,6 @@
 #include "../core/graphics.h"
 
 #define MAP_SIZE 300
-#define MAP_WIDTH 300
-#define MAP_HEIGHT 300
 #define TILE_SIZE 32
 
 #include <SDL2/SDL.h>
@@ -12,39 +10,59 @@ static char terrain_map[MAP_SIZE][MAP_SIZE];
 int cam_x = 0, cam_y = 0;
 //static SDL_Texture* tile_textures[3]; // to be allocated dynamically
 
+int MAP_HEIGHT = 300;
+int MAP_WIDTH = 300;
+
 bool load_map(char* filename)
 {
     FILE* f = fopen(filename, "r");
     if (!f) return false;
 
-    char line[300];
+    char line[1024];  // allow for flexible line width
     int row_index = 0;
-    // going through every line in the map file
+    int max_width = 0;
+
     while (fgets(line, sizeof(line), f))
     {
         int len = strlen(line);
-        // remove the newline character if present
-        if (line[len - 1] == '\n') {
-            line[len - 1] = '\0';
-            len--;
+
+        // Remove trailing newline or carriage return characters
+        while (len > 0 && (line[len - 1] == '\n' || line[len - 1] == '\r')) {
+            line[--len] = '\0';
         }
 
-        for (int i = 0; i < 300; i++)  // Only copy actual data length
+        // Skip empty lines
+        if (len == 0) continue;
+
+        // Track max line width
+        if (len > max_width) max_width = len;
+
+        // Copy each character into the map
+        for (int i = 0; i < len; i++)
         {
             terrain_map[row_index][i] = line[i];
-            //if(i==2) printf("SECOND LINE %s", line);
         }
-        row_index++;
-        //if(row_index == 2) break;
 
-        // check to avoid overflowing the map
+        // Fill rest of row with '0' if line is shorter than max
+        for (int i = len; i < MAP_SIZE; i++)
+        {
+            terrain_map[row_index][i] = '0';  // sky tile or fallback
+        }
+
+        row_index++;
+
         if (row_index >= MAP_SIZE) break;
     }
-    printf("ROW_COUNT: %d\n", row_index);
+
+    MAP_WIDTH = max_width;
+    MAP_HEIGHT = row_index;
+
+    printf("Map dimensions: width=%d, height=%d\n", MAP_WIDTH, MAP_HEIGHT);
+
     fclose(f);
     return true;
-
 }
+
 
 char** load_2D_map(char* filename)
 {
@@ -201,6 +219,11 @@ void assign_textures(SDL_Texture** textures, int textures_length)
     {
         //tile_textures[i] = textures[i];
     }
+}
+
+int get_tile_at(int x, int y, char** map) {
+    if (x < 0 || x >= MAP_SIZE || y < 0 || y >= MAP_SIZE) return -1;
+    return map[y][x] - '0'; // assumes tile is a digit character (to be fixed to accept symbols)
 }
 
 

@@ -1,0 +1,27 @@
+<script>
+        <menu file="assets/menu.txt"/>
+        <play>
+        <!-- Map and Tiles -->
+        <map type="terrain_map" file="assets_platformer/map_man.txt">
+            <tile file="assets_platformer/tile_1.bmp" />
+            <tile file="assets_platformer/tile_2.png"/>
+            <tile file="assets_platformer/tile_3.png"/>
+        </map>
+
+        <map type="object_map" file="assets_platformer/map_man.txt">
+            <tile file="assets_platformer/tile_1.bmp" />
+            <tile file="assets_platformer/tile_2.png" collision="true" index="1">
+                <collision_event script="assets_ib/script.xml"/>
+            </tile>
+            <tile file="assets_platformer/tile_3.png" collision="true"/>
+        </map>
+        <!-- Player Sprites -->
+        <player_sprite gravity="down" speed="200">
+            <jump height="300"/>
+            <direction file="assets_platformer/player.png" />
+            <direction file="assets_platformer/player.png" />
+            <direction file="assets_platformer/player.png" />
+            <direction file="assets_platformer/player.png" />
+        </player_sprite>
+    </play>
+</script>

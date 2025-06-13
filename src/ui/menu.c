@@ -63,7 +63,7 @@ SDL_Texture* build_menu()
     for (int i = 0; i < length + 1; i++) widths[i] = 175;
     for (int i = 0; i < length + 1; i++) heights[i] = 100;
 
-    heights[0] = 600;
+    heights[0] = WINDOW_HEIGHT;
     widths[0] = 175;
 
 
@@ -117,7 +117,7 @@ bool render_menu()
 {
     SDL_Texture* menu_build = build_menu();
     if(menu_build == NULL) printf("PROBLM EHERE");
-    graphics_draw_texture(menu_build, 625, 0);
+    graphics_draw_texture(menu_build, WINDOW_WIDTH - 175, 0);
     return true;
 }
 

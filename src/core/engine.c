@@ -18,7 +18,7 @@ int player_speed = 10;
 bool engine_init()
 {
     if (!graphics_init()) return false;
-    if (!script_load_xml("assets/start.xml")) return false;
+    if (!script_load_xml("assets_platformer/start.xml")) return false;
     return true;
 }
 

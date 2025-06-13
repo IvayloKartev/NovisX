@@ -56,3 +56,5 @@ assets/*.png
 assets/*.ogg
 assets/*.jpg
 assets/*.txt
+assets_platformer/*.png
+assets_platformer/*.bmp
